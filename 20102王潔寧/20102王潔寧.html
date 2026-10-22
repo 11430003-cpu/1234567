@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台灣美食</title>
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #fff7ee;
+  color: #3b2a1e;
+  font-family: "Microsoft JhengHei", sans-serif;
+  margin: 0;
+  line-height: 1.8;
+}
+
+header {
+  background-color: #d9541e;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+nav {
+  background-color: #3b2a1e;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+nav li a {
+  display: block;
+  padding: 12px 22px;
+  color: #fff7ee;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 4px solid transparent;
+  transition: background-color .2s, border-color .2s;
+}
+nav li a:hover,
+nav li a:focus-visible {
+  background-color: #d9541e;
+  border-bottom-color: #f4a259;
+  color: white;
+}
+
+main {
+  width: 800px;
+  max-width: 95%;
+  margin: 20px auto;
+}
+
+section {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  scroll-margin-top: 60px;   
+}
+
+h2 {
+  color: #d9541e;
+  border-bottom: 3px solid #f4a259;
+}
+
+a { color: #d9541e; }
+a:hover { color: #f4a259; }
+
+
+.food {
+  display: inline-block;
+  margin: 8px;
+  text-align: center;
+}
+.food img {
+  border: 3px solid #f1d9c0;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #f1d9c0;
+  padding: 8px;
+}
+th {
+  background-color: #d9541e;
+  color: white;
+}
+
+.video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 8px;
+}
+
+
+.question {
+  border: 2px solid #f1d9c0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+.question h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 6px 0;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  background: #fff7ee;
+  border: 2px solid #f1d9c0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.options button:hover:not(:disabled) { border-color: #f4a259; }
+.options button.correct { background: #d8f3dc; border-color: #2d9a4b; }
+.options button.wrong   { background: #fde0dc; border-color: #d33a2c; }
+.options button:disabled { cursor: default; }
+.feedback { min-height: 1.8em; font-weight: bold; margin: 4px 0 0; }
+
+#showScore {
+  background-color: #d9541e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+#showScore:hover { background-color: #f4a259; }
+#result {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d9541e;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🍜 舌尖上的台灣</h1>
+  <p>一起認識台灣代表美食</p>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#intro">美食介紹</a></li>
+    <li><a href="#gallery">圖片介紹</a></li>
+    <li><a href="#table">美食整理表</a></li>
+    <li><a href="#video">美食影片</a></li>
+    <li><a href="#quiz">美食測驗</a></li>
+    <li><a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section id="intro">
+    <h2>美食介紹</h2>
+    <p>台灣的小吃種類多、價格親民，夜市更是美食的聚集地。
+       想規劃旅遊，可以參考
+       <a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a>。</p>
+  </section>
+
+  <section id="gallery">
+    <h2>點選圖片看介紹</h2>
+
+    <div class="food">
+      <img src="./images/beef.jpg" width="300" height="200" alt="牛肉麵" usemap="#map-beef">
+      <map name="map-beef">
+        <area shape="rect" coords="0,0,300,200"
+              href="https://icook.tw/recipes/425657" target="_blank"
+              alt="紅燒牛肉麵食譜" title="牛肉麵：愛料理食譜">
+      </map>
+      <p>牛肉麵</p>
+    </div>
+
+    <div class="food">
+      <img src="./images/tea.jpg" width="300" height="200" alt="珍珠奶茶" usemap="#map-tea">
+      <map name="map-tea">
+        <area shape="rect" coords="0,0,300,200"
+              href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank"
+              alt="珍珠奶茶冷知識" title="珍珠奶茶：來好 LAI HAO 冷知識">
+      </map>
+      <p>珍珠奶茶</p>
+    </div>
+
+    <div class="food">
+      <img src="./images/oyster.jpg" width="300" height="200" alt="蚵仔煎" usemap="#map-oyster">
+      <map name="map-oyster">
+        <area shape="rect" coords="0,0,300,200"
+              href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank"
+              alt="蚵仔煎食譜" title="蚵仔煎：楊桃美食網食譜">
+      </map>
+      <p>蚵仔煎</p>
+    </div>
+
+    <div class="food">
+      <img src="./images/xlb.jpg" width="300" height="200" alt="小籠包" usemap="#map-xlb">
+      <map name="map-xlb">
+        <area shape="rect" coords="0,0,300,200"
+              href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank"
+              alt="古早味小籠包食譜" title="小籠包：Cookidoo 食譜">
+      </map>
+      <p>小籠包</p>
+    </div>
+  </section>
+
+  <section id="table">
+    <h2>美食整理表</h2>
+    <table>
+      <tr>
+        <th>美食</th>
+        <th>類型</th>
+        <th>特色</th>
+        <th>延伸閱讀</th>
+      </tr>
+      <tr>
+        <td>牛肉麵</td>
+        <td>麵食</td>
+        <td>湯頭濃郁，牛肉軟嫩</td>
+        <td><a href="https://icook.tw/recipes/425657" target="_blank">愛料理：紅燒牛肉麵</a></td>
+      </tr>
+      <tr>
+        <td>珍珠奶茶</td>
+        <td>飲品</td>
+        <td>奶茶加入Q彈粉圓</td>
+        <td><a href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank">來好：珍珠奶茶冷知識</a></td>
+      </tr>
+      <tr>
+        <td>蚵仔煎</td>
+        <td>小吃</td>
+        <td>蚵仔、蛋、粉漿煎成，淋甜辣醬</td>
+        <td><a href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank">楊桃美食網：蚵仔煎</a></td>
+      </tr>
+      <tr>
+        <td>小籠包</td>
+        <td>點心</td>
+        <td>薄皮包肉餡與湯汁</td>
+        <td><a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank">Cookidoo：古早味小籠包</a></td>
+      </tr>
+    </table>
+ <section id="video">
+    <h2>美食影片</h2>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/D1hvh3CIl9k?si=gAYndvcv_7KpO9FT"
+        title="台灣美食介紹影片" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+      </section>
+
+  <section id="quiz">
+    <h2>美食小測驗</h2>
+    <p>共 4 題，每題答對得 25 分，每題只能作答一次。</p>
+
+    <div class="question" data-answer="1">
+      <h3>第 1 題：哪一種美食的特色是「奶茶加入Q彈粉圓」？</h3>
+      <div class="options">
+        <button type="button" data-index="0">牛肉麵</button>
+        <button type="button" data-index="1">珍珠奶茶</button>
+        <button type="button" data-index="2">蚵仔煎</button>
+      </div>
+      <p class="feedback"></p>
+    </div>
+
+    <div class="question" data-answer="2">
+      <h3>第 2 題：蚵仔煎通常會淋上哪一種醬料？</h3>
+      <div class="options">
+        <button type="button" data-index="0">酸辣湯汁</button>
+        <button type="button" data-index="1">咖哩醬</button>
+        <button type="button" data-index="2">甜辣醬</button>
+      </div>
+      <p class="feedback"></p>
+    </div>
+
+    <div class="question" data-answer="0">
+      <h3>第 3 題：小籠包的特色是什麼？</h3>
+      <div class="options">
+        <button type="button" data-index="0">薄皮包肉餡與湯汁</button>
+        <button type="button" data-index="1">酥脆的炸皮</button>
+        <button type="button" data-index="2">甜味豆沙內餡</button>
+      </div>
+      <p class="feedback"></p>
+    </div>
+
+    <div class="question" data-answer="1">
+      <h3>第 4 題：下列哪一項屬於「麵食」類型？</h3>
+      <div class="options">
+        <button type="button" data-index="0">珍珠奶茶</button>
+        <button type="button" data-index="1">牛肉麵</button>
+        <button type="button" data-index="2">小籠包</button>
+      </div>
+      <p class="feedback"></p>
+    </div>
+
+    <button type="button" id="showScore">顯示成績</button>
+    <p id="result"></p>
+  </section>
+
+</main>
+
+<footer>© 台灣美食網頁作業　資料來源、圖片來源：愛料理、來好 LAI HAO、楊桃美食網、Cookidoo</footer>
+
+<script>
+  var score = 0;            
+  var answered = 0;         
+  var POINTS = 25;         
+  var questions = document.querySelectorAll(".question");
+
+  questions.forEach(function (q) {
+    var answer = Number(q.dataset.answer);
+    var buttons = q.querySelectorAll(".options button");
+    var feedback = q.querySelector(".feedback");
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var choice = Number(btn.dataset.index);
+
+        if (choice === answer) {
+          score += POINTS;
+          btn.classList.add("correct");
+          feedback.textContent = "✔ 答對了！+" + POINTS + " 分";
+        } else {
+          btn.classList.add("wrong");
+          buttons[answer].classList.add("correct");
+          feedback.textContent = "✘ 答錯了";
+        }
+
+        buttons.forEach(function (b) { b.disabled = true; });
+        answered++;
+      });
+    });
+  });
+
+  document.getElementById("showScore").addEventListener("click", function () {
+    var result = document.getElementById("result");
+    var total = questions.length * POINTS;
+    if (answered < questions.length) {
+      result.textContent = "還有 " + (questions.length - answered) + " 題未作答，目前成績：" + score + " / " + total + " 分";
+    } else {
+      result.textContent = "你的總成績：" + score + " / " + total + " 分";
+    }
+  });
+</script>
+
+</body>
+</html>
