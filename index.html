@@ -375,6 +375,38 @@ footer {
       result.textContent = "你的總成績：" + score + " / " + total + " 分";
     }
   });
+  var taiwanFoods = [
+    "牛肉麵", "珍珠奶茶", "蚵仔煎", "小籠包",
+    "滷肉飯", "臭豆腐", "鹽酥雞", "大腸包小腸",
+    "鳳梨酥", "肉圓", "割包", "胡椒餅",
+    "擔仔麵", "麵線", "豆花", "芒果冰"
+  ];
+
+  var aliases = {
+    "珍奶": "珍珠奶茶",
+    "波霸奶茶": "珍珠奶茶",
+    "蚵嗲": "蚵仔煎",
+    "魯肉飯": "滷肉飯",
+    "刈包": "割包",
+    "蚵仔麵線": "麵線"
+  };
+
+  function isTaiwanFood(name) {
+    var food = String(name).trim();
+    if (food === "") return "請輸入美食名稱";
+    if (aliases[food]) food = aliases[food];
+    return taiwanFoods.indexOf(food) !== -1
+      ? "✔ 是台灣美食"
+      : "✘ 不在台灣美食清單中";
+  }
+
+  document.getElementById("checkBtn").addEventListener("click", function () {
+    document.getElementById("checkResult").textContent =
+      isTaiwanFood(document.getElementById("foodName").value);
+  });
+  document.getElementById("foodName").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") document.getElementById("checkBtn").click();
+  });
 </script>
 
 </body>
