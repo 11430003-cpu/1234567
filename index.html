@@ -336,9 +336,10 @@ footer {
 <footer>© 台灣美食網頁作業　資料來源、圖片來源：愛料理、來好 LAI HAO、楊桃美食網、Cookidoo</footer>
 
 <script>
-  var score = 0;            
-  var answered = 0;         
-  var POINTS = 25;         
+  /* ===== 美食測驗 ===== */
+  var score = 0;      // 目前分數
+  var answered = 0;   // 已作答題數
+  var POINTS = 25;    // 每題分數
   var questions = document.querySelectorAll(".question");
 
   questions.forEach(function (q) {
@@ -356,26 +357,29 @@ footer {
           feedback.textContent = "✔ 答對了！+" + POINTS + " 分";
         } else {
           btn.classList.add("wrong");
-          buttons[answer].classList.add("correct");
+          buttons[answer].classList.add("correct");   // 順便標出正確答案
           feedback.textContent = "✘ 答錯了";
         }
 
+        // 每題只能作答一次
         buttons.forEach(function (b) { b.disabled = true; });
         answered++;
       });
     });
   });
-  </script>
-<script>
+
   document.getElementById("showScore").addEventListener("click", function () {
     var result = document.getElementById("result");
     var total = questions.length * POINTS;
     if (answered < questions.length) {
-      result.textContent = "還有 " + (questions.length - answered) + " 題未作答，目前成績：" + score + " / " + total + " 分";
+      result.textContent = "還有 " + (questions.length - answered) +
+        " 題未作答，目前成績：" + score + " / " + total + " 分";
     } else {
       result.textContent = "你的總成績：" + score + " / " + total + " 分";
     }
   });
+
+  /* ===== 判斷是不是台灣美食 ===== */
   var taiwanFoods = [
     "牛肉麵", "珍珠奶茶", "蚵仔煎", "小籠包",
     "滷肉飯", "臭豆腐", "鹽酥雞", "大腸包小腸",
@@ -383,6 +387,7 @@ footer {
     "擔仔麵", "麵線", "豆花", "芒果冰"
   ];
 
+  // 別名 → 正式名稱
   var aliases = {
     "珍奶": "珍珠奶茶",
     "波霸奶茶": "珍珠奶茶",
@@ -401,13 +406,19 @@ footer {
       : "✘ 不在台灣美食清單中";
   }
 
-  document.getElementById("checkBtn").addEventListener("click", function () {
-    document.getElementById("checkResult").textContent =
-      isTaiwanFood(document.getElementById("foodName").value);
-  });
-  document.getElementById("foodName").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") document.getElementById("checkBtn").click();
-  });
+  var foodInput = document.getElementById("foodName");
+  var checkBtn = document.getElementById("checkBtn");
+  var checkResult = document.getElementById("checkResult");
+
+  // 三個元素都找得到才綁定事件，避免 HTML 漏寫 id 時報錯
+  if (foodInput && checkBtn && checkResult) {
+    checkBtn.addEventListener("click", function () {
+      checkResult.textContent = isTaiwanFood(foodInput.value);
+    });
+    foodInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") checkBtn.click();
+    });
+  }
 </script>
 
 </body>
