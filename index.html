@@ -65,7 +65,7 @@ section {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
-  scroll-margin-top: 60px;   
+  scroll-margin-top: 60px;
 }
 
 h2 {
@@ -75,7 +75,6 @@ h2 {
 
 a { color: #d9541e; }
 a:hover { color: #f4a259; }
-
 
 .food {
   display: inline-block;
@@ -116,7 +115,6 @@ th {
   border-radius: 8px;
 }
 
-
 .question {
   border: 2px solid #f1d9c0;
   border-radius: 8px;
@@ -143,7 +141,8 @@ th {
 .options button:disabled { cursor: default; }
 .feedback { min-height: 1.8em; font-weight: bold; margin: 4px 0 0; }
 
-#showScore {
+#showScore,
+#checkBtn {
   background-color: #d9541e;
   color: white;
   border: none;
@@ -153,13 +152,25 @@ th {
   font-weight: bold;
   cursor: pointer;
 }
-#showScore:hover { background-color: #f4a259; }
-#result {
+#showScore:hover,
+#checkBtn:hover { background-color: #f4a259; }
+#result,
+#checkResult {
   margin-top: 12px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #d9541e;
 }
+
+/* 美食判斷 */
+#foodName {
+  font: inherit;
+  padding: 8px 10px;
+  margin: 4px 4px 4px 0;
+  border: 2px solid #f1d9c0;
+  border-radius: 6px;
+}
+.hint { font-size: .9rem; color: #7a6552; }
 
 footer {
   text-align: center;
@@ -182,6 +193,7 @@ footer {
     <li><a href="#table">美食整理表</a></li>
     <li><a href="#video">美食影片</a></li>
     <li><a href="#quiz">美食測驗</a></li>
+    <li><a href="#check">美食判斷</a></li>
     <li><a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a></li>
   </ul>
 </nav>
@@ -273,7 +285,9 @@ footer {
         <td><a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank">Cookidoo：古早味小籠包</a></td>
       </tr>
     </table>
- <section id="video">
+  </section>
+
+  <section id="video">
     <h2>美食影片</h2>
     <div class="video-wrap">
       <iframe src="https://www.youtube.com/embed/D1hvh3CIl9k?si=gAYndvcv_7KpO9FT"
@@ -281,7 +295,7 @@ footer {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-      </section>
+  </section>
 
   <section id="quiz">
     <h2>美食小測驗</h2>
@@ -331,15 +345,23 @@ footer {
     <p id="result"></p>
   </section>
 
+  <section id="check">
+    <h2>這是台灣美食嗎？</h2>
+    <input id="foodName" type="text" placeholder="輸入美食名稱，例如：珍奶">
+    <button type="button" id="checkBtn">判斷</button>
+    <p id="checkResult"></p>
+    <p class="hint">沒收錄在清單中，不代表一定不是台灣美食。</p>
+  </section>
+
 </main>
 
 <footer>© 台灣美食網頁作業　資料來源、圖片來源：愛料理、來好 LAI HAO、楊桃美食網、Cookidoo</footer>
 
 <script>
   /* ===== 美食測驗 ===== */
-  var score = 0;      // 目前分數
-  var answered = 0;   // 已作答題數
-  var POINTS = 25;    // 每題分數
+  var score = 0;
+  var answered = 0;
+  var POINTS = 25;
   var questions = document.querySelectorAll(".question");
 
   questions.forEach(function (q) {
@@ -357,11 +379,10 @@ footer {
           feedback.textContent = "✔ 答對了！+" + POINTS + " 分";
         } else {
           btn.classList.add("wrong");
-          buttons[answer].classList.add("correct");   // 順便標出正確答案
+          buttons[answer].classList.add("correct");
           feedback.textContent = "✘ 答錯了";
         }
 
-        // 每題只能作答一次
         buttons.forEach(function (b) { b.disabled = true; });
         answered++;
       });
@@ -372,8 +393,7 @@ footer {
     var result = document.getElementById("result");
     var total = questions.length * POINTS;
     if (answered < questions.length) {
-      result.textContent = "還有 " + (questions.length - answered) +
-        " 題未作答，目前成績：" + score + " / " + total + " 分";
+      result.textContent = "還有 " + (questions.length - answered) + " 題未作答，目前成績：" + score + " / " + total + " 分";
     } else {
       result.textContent = "你的總成績：" + score + " / " + total + " 分";
     }
@@ -387,7 +407,6 @@ footer {
     "擔仔麵", "麵線", "豆花", "芒果冰"
   ];
 
-  // 別名 → 正式名稱
   var aliases = {
     "珍奶": "珍珠奶茶",
     "波霸奶茶": "珍珠奶茶",
@@ -406,19 +425,13 @@ footer {
       : "✘ 不在台灣美食清單中";
   }
 
-  var foodInput = document.getElementById("foodName");
-  var checkBtn = document.getElementById("checkBtn");
-  var checkResult = document.getElementById("checkResult");
-
-  // 三個元素都找得到才綁定事件，避免 HTML 漏寫 id 時報錯
-  if (foodInput && checkBtn && checkResult) {
-    checkBtn.addEventListener("click", function () {
-      checkResult.textContent = isTaiwanFood(foodInput.value);
-    });
-    foodInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") checkBtn.click();
-    });
-  }
+  document.getElementById("checkBtn").addEventListener("click", function () {
+    document.getElementById("checkResult").textContent =
+      isTaiwanFood(document.getElementById("foodName").value);
+  });
+  document.getElementById("foodName").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") document.getElementById("checkBtn").click();
+  });
 </script>
 
 </body>
