@@ -6,6 +6,10 @@
 <title>台灣美食</title>
 <link rel="icon" type="image/png" href="favicon.png">
 
+<!-- Bootstrap CSS CDN：放在自己的 <style> 前面，自訂樣式才能覆蓋 -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
 <style>
 html { scroll-behavior: smooth; }
 
@@ -141,19 +145,6 @@ th {
 .options button:disabled { cursor: default; }
 .feedback { min-height: 1.8em; font-weight: bold; margin: 4px 0 0; }
 
-#showScore,
-#checkBtn {
-  background-color: #d9541e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 24px;
-  font: inherit;
-  font-weight: bold;
-  cursor: pointer;
-}
-#showScore:hover,
-#checkBtn:hover { background-color: #f4a259; }
 #result,
 #checkResult {
   margin-top: 12px;
@@ -162,7 +153,6 @@ th {
   color: #d9541e;
 }
 
-/* 美食判斷 */
 #foodName {
   font: inherit;
   padding: 8px 10px;
@@ -171,6 +161,28 @@ th {
   border-radius: 6px;
 }
 .hint { font-size: .9rem; color: #7a6552; }
+
+/* Bootstrap 的主要按鈕換成橘色主題 */
+.btn-primary {
+  --bs-btn-bg: #d9541e;
+  --bs-btn-border-color: #d9541e;
+  --bs-btn-hover-bg: #b8441a;
+  --bs-btn-hover-border-color: #b8441a;
+  --bs-btn-active-bg: #a33c17;
+  --bs-btn-active-border-color: #a33c17;
+  --bs-btn-disabled-bg: #d9541e;
+  --bs-btn-disabled-border-color: #d9541e;
+}
+.btn-outline-primary {
+  --bs-btn-color: #d9541e;
+  --bs-btn-border-color: #d9541e;
+  --bs-btn-hover-bg: #d9541e;
+  --bs-btn-hover-border-color: #d9541e;
+  --bs-btn-active-bg: #d9541e;
+  --bs-btn-active-border-color: #d9541e;
+  --bs-btn-disabled-color: #d9541e;
+  --bs-btn-disabled-border-color: #d9541e;
+}
 
 footer {
   text-align: center;
@@ -181,7 +193,7 @@ footer {
 
 <body>
 
-<header>
+<header id="top">
   <h1>🍜 舌尖上的台灣</h1>
   <p>一起認識台灣代表美食</p>
 </header>
@@ -205,6 +217,8 @@ footer {
     <p>台灣的小吃種類多、價格親民，夜市更是美食的聚集地。
        想規劃旅遊，可以參考
        <a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a>。</p>
+    <!-- 大尺寸按鈕 btn-lg -->
+    <a href="#gallery" class="btn btn-primary btn-lg">開始認識美食</a>
   </section>
 
   <section id="gallery">
@@ -217,7 +231,10 @@ footer {
               href="https://icook.tw/recipes/425657" target="_blank"
               alt="紅燒牛肉麵食譜" title="牛肉麵：愛料理食譜">
       </map>
-      <p>牛肉麵</p>
+      <p class="mb-1">牛肉麵</p>
+      <!-- 小尺寸 + Outline 按鈕 -->
+      <a href="https://icook.tw/recipes/425657" target="_blank" rel="noopener"
+         class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
 
     <div class="food">
@@ -227,7 +244,9 @@ footer {
               href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank"
               alt="珍珠奶茶冷知識" title="珍珠奶茶：來好 LAI HAO 冷知識">
       </map>
-      <p>珍珠奶茶</p>
+      <p class="mb-1">珍珠奶茶</p>
+      <a href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank" rel="noopener"
+         class="btn btn-outline-primary btn-sm">看冷知識</a>
     </div>
 
     <div class="food">
@@ -237,7 +256,9 @@ footer {
               href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank"
               alt="蚵仔煎食譜" title="蚵仔煎：楊桃美食網食譜">
       </map>
-      <p>蚵仔煎</p>
+      <p class="mb-1">蚵仔煎</p>
+      <a href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank" rel="noopener"
+         class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
 
     <div class="food">
@@ -247,7 +268,9 @@ footer {
               href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank"
               alt="古早味小籠包食譜" title="小籠包：Cookidoo 食譜">
       </map>
-      <p>小籠包</p>
+      <p class="mb-1">小籠包</p>
+      <a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank" rel="noopener"
+         class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
   </section>
 
@@ -341,17 +364,28 @@ footer {
       <p class="feedback"></p>
     </div>
 
-    <button type="button" id="showScore">顯示成績</button>
+    <!-- 顏色不同：success；禁用狀態：還沒作答時「重新測驗」不能按 -->
+    <button type="button" id="showScore" class="btn btn-success">顯示成績</button>
+    <button type="button" id="resetQuiz" class="btn btn-outline-secondary" disabled>重新測驗</button>
     <p id="result"></p>
   </section>
 
   <section id="check">
     <h2>這是台灣美食嗎？</h2>
     <input id="foodName" type="text" placeholder="輸入美食名稱，例如：珍奶">
-    <button type="button" id="checkBtn">判斷</button>
+    <button type="button" id="checkBtn" class="btn btn-primary">判斷</button>
+    <!-- 禁用狀態：輸入框是空的時候不能按 -->
+    <button type="button" id="addBtn" class="btn btn-outline-primary" disabled>加入清單</button>
+    <button type="button" id="clearInput" class="btn btn-outline-danger btn-sm">清除輸入</button>
     <p id="checkResult"></p>
-    <p class="hint">沒收錄在清單中，不代表一定不是台灣美食。</p>
+    <p class="hint">目前清單：<span id="foodList"></span></p>
+    <!-- 顏色不同：danger + 小尺寸 -->
+    <button type="button" id="resetFoods" class="btn btn-danger btn-sm">清空自己加入的美食</button>
   </section>
+
+  <div class="text-center mb-4">
+    <a href="#top" class="btn btn-outline-primary">返回首頁</a>
+  </div>
 
 </main>
 
@@ -363,6 +397,7 @@ footer {
   var answered = 0;
   var POINTS = 25;
   var questions = document.querySelectorAll(".question");
+  var resetQuizBtn = document.getElementById("resetQuiz");
 
   questions.forEach(function (q) {
     var answer = Number(q.dataset.answer);
@@ -385,6 +420,7 @@ footer {
 
         buttons.forEach(function (b) { b.disabled = true; });
         answered++;
+        resetQuizBtn.disabled = false;   // 作答後才能重新測驗
       });
     });
   });
@@ -399,13 +435,28 @@ footer {
     }
   });
 
-  /* ===== 判斷是不是台灣美食 ===== */
-  var taiwanFoods = [
+  resetQuizBtn.addEventListener("click", function () {
+    score = 0;
+    answered = 0;
+    questions.forEach(function (q) {
+      q.querySelectorAll(".options button").forEach(function (b) {
+        b.disabled = false;
+        b.classList.remove("correct", "wrong");
+      });
+      q.querySelector(".feedback").textContent = "";
+    });
+    document.getElementById("result").textContent = "";
+    resetQuizBtn.disabled = true;
+  });
+
+  /* ===== 判斷是不是台灣美食（可自行加入） ===== */
+  var defaultFoods = [
     "牛肉麵", "珍珠奶茶", "蚵仔煎", "小籠包",
     "滷肉飯", "臭豆腐", "鹽酥雞", "大腸包小腸",
     "鳳梨酥", "肉圓", "割包", "胡椒餅",
     "擔仔麵", "麵線", "豆花", "芒果冰"
   ];
+  var taiwanFoods = defaultFoods.slice();
 
   var aliases = {
     "珍奶": "珍珠奶茶",
@@ -416,23 +467,95 @@ footer {
     "蚵仔麵線": "麵線"
   };
 
-  function isTaiwanFood(name) {
+  var STORAGE_KEY = "myTaiwanFoods";
+
+  // 讀取之前自己加入的美食（瀏覽器關掉再開還在）
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    saved.forEach(function (f) {
+      if (taiwanFoods.indexOf(f) === -1) taiwanFoods.push(f);
+    });
+  } catch (e) {}
+
+  function normalize(name) {
     var food = String(name).trim();
+    return aliases[food] ? aliases[food] : food;
+  }
+
+  function isTaiwanFood(name) {
+    var food = normalize(name);
     if (food === "") return "請輸入美食名稱";
-    if (aliases[food]) food = aliases[food];
     return taiwanFoods.indexOf(food) !== -1
       ? "✔ 是台灣美食"
       : "✘ 不在台灣美食清單中";
   }
 
-  document.getElementById("checkBtn").addEventListener("click", function () {
-    document.getElementById("checkResult").textContent =
-      isTaiwanFood(document.getElementById("foodName").value);
+  function addFood(name) {
+    var food = normalize(name);
+    if (food === "") return "請輸入要加入的美食名稱";
+    if (taiwanFoods.indexOf(food) !== -1) return "「" + food + "」已經在清單裡了";
+    taiwanFoods.push(food);
+    try {
+      var custom = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      custom.push(food);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(custom));
+    } catch (e) {}
+    return "✔ 已加入「" + food + "」";
+  }
+
+  var foodInput = document.getElementById("foodName");
+  var checkBtn = document.getElementById("checkBtn");
+  var addBtn = document.getElementById("addBtn");
+  var clearInput = document.getElementById("clearInput");
+  var resetFoods = document.getElementById("resetFoods");
+  var checkResult = document.getElementById("checkResult");
+  var foodList = document.getElementById("foodList");
+
+  function showList() {
+    foodList.textContent = taiwanFoods.join("、");
+  }
+
+  // 輸入框有字，「加入清單」才能按
+  foodInput.addEventListener("input", function () {
+    addBtn.disabled = foodInput.value.trim() === "";
   });
-  document.getElementById("foodName").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") document.getElementById("checkBtn").click();
+
+  checkBtn.addEventListener("click", function () {
+    checkResult.textContent = isTaiwanFood(foodInput.value);
   });
+
+  addBtn.addEventListener("click", function () {
+    checkResult.textContent = addFood(foodInput.value);
+    foodInput.value = "";
+    addBtn.disabled = true;
+    foodInput.focus();
+    showList();
+  });
+
+  clearInput.addEventListener("click", function () {
+    foodInput.value = "";
+    addBtn.disabled = true;
+    checkResult.textContent = "";
+    foodInput.focus();
+  });
+
+  resetFoods.addEventListener("click", function () {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    taiwanFoods = defaultFoods.slice();
+    checkResult.textContent = "已清空自己加入的美食";
+    showList();
+  });
+
+  foodInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") checkBtn.click();   // Enter = 判斷
+  });
+
+  showList();
 </script>
+
+<!-- Bootstrap JS -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
