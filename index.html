@@ -8,9 +8,6 @@
 
 <!-- Bootstrap CSS CDN：放在自己的 <style> 前面，自訂樣式才能覆蓋 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<!-- 作業：1.按鈕物件  2.keyframe 效果 -->
-<link rel="stylesheet" href="css/buttons.css">
-<link rel="stylesheet" href="css/keyframes.css">
 
 <style>
 html { scroll-behavior: smooth; }
@@ -23,42 +20,21 @@ body {
   line-height: 1.8;
 }
 
-header {
-  background-color: #d9541e;
-  color: white;
-  text-align: center;
-  padding: 30px;
-}
+header { background-color: #d9541e; color: white; text-align: center; padding: 30px; }
 
 nav { background-color: #3b2a1e; position: sticky; top: 0; z-index: 10; }
 nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; }
 nav li a {
-  display: block;
-  padding: 12px 22px;
-  color: #fff7ee;
-  text-decoration: none;
-  font-weight: bold;
-  border-bottom: 4px solid transparent;
-  transition: background-color .2s, border-color .2s;
+  display: block; padding: 12px 22px; color: #fff7ee; text-decoration: none; font-weight: bold;
+  border-bottom: 4px solid transparent; transition: background-color .2s, border-color .2s;
 }
-nav li a:hover, nav li a:focus-visible {
-  background-color: #d9541e;
-  border-bottom-color: #f4a259;
-  color: white;
-}
+nav li a:hover, nav li a:focus-visible { background-color: #d9541e; border-bottom-color: #f4a259; color: white; }
 
 main { width: 800px; max-width: 95%; margin: 20px auto; }
 
-section {
-  background-color: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  scroll-margin-top: 60px;
-}
+section { background-color: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; scroll-margin-top: 60px; }
 
 h2 { color: #d9541e; border-bottom: 3px solid #f4a259; }
-
 a { color: #d9541e; }
 a:hover { color: #f4a259; }
 
@@ -76,8 +52,7 @@ th { background-color: #d9541e; color: white; }
 .question h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .options button {
   display: block; width: 100%; text-align: left; margin: 6px 0; padding: 8px 12px;
-  font: inherit; color: inherit; background: #fff7ee; border: 2px solid #f1d9c0;
-  border-radius: 6px; cursor: pointer;
+  font: inherit; color: inherit; background: #fff7ee; border: 2px solid #f1d9c0; border-radius: 6px; cursor: pointer;
 }
 .options button:hover:not(:disabled) { border-color: #f4a259; }
 .options button.correct { background: #d8f3dc; border-color: #2d9a4b; }
@@ -86,7 +61,6 @@ th { background-color: #d9541e; color: white; }
 .feedback { min-height: 1.8em; font-weight: bold; margin: 4px 0 0; }
 
 #result, #checkResult { margin-top: 12px; font-size: 1.2rem; font-weight: bold; color: #d9541e; }
-
 #foodName { font: inherit; padding: 8px 10px; margin: 4px 4px 4px 0; border: 2px solid #f1d9c0; border-radius: 6px; }
 .hint { font-size: .9rem; color: #7a6552; }
 
@@ -104,11 +78,150 @@ th { background-color: #d9541e; color: white; }
   --bs-btn-disabled-color: #d9541e; --bs-btn-disabled-border-color: #d9541e;
 }
 
-/* 動態效果區塊 */
-.stage { overflow: hidden; min-height: 90px; margin: 12px 0; }
-.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
-
 footer { text-align: center; padding: 15px; }
+
+/* =====================================================
+   作業 1：hover 動態按鈕（直接套用在網頁原本的按鈕上）
+   ===================================================== */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s, background-color .25s, color .25s;
+}
+
+/* A. 上浮 + 陰影 */
+.btn:not(:disabled):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(217, 84, 30, .35);
+}
+
+/* B. 按下去縮小 */
+.btn:not(:disabled):active {
+  transform: translateY(0) scale(.96);
+  box-shadow: none;
+}
+
+/* C. 光澤掃過 */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+.btn:not(:disabled):hover::after { animation: shine .7s; }
+
+/* D. 小按鈕：放大 + 微旋轉 */
+.btn-sm:not(:disabled):hover { transform: translateY(-3px) scale(1.08) rotate(-3deg); }
+
+/* E. 大按鈕「開始認識美食」：擺動 */
+.btn-lg:not(:disabled):hover { animation: wiggle .5s; }
+
+/* F. 「顯示成績」：彈跳 */
+.btn-success:not(:disabled):hover { animation: bounceBtn .6s; }
+
+/* G. 「清空自己加入的美食」：搖晃 */
+.btn-danger:not(:disabled):hover { animation: shake .4s; }
+
+/* =====================================================
+   作業 2：@keyframes 動畫（善用百分比）
+   ===================================================== */
+.stage { overflow: hidden; min-height: 90px; margin: 12px 0; }
+
+/* 光澤掃過（按鈕用） */
+@keyframes shine { 0% { left: -75%; } 100% { left: 130%; } }
+
+/* 擺動（按鈕、翻牌圖示用） */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
+}
+
+/* 按鈕彈跳 */
+@keyframes bounceBtn {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+  60% { transform: translateY(0); }
+  80% { transform: translateY(-4px); }
+}
+
+/* 按鈕搖晃 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* 彈跳：20% 壓扁 → 50% 跳起 → 80% 落地 */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(0) scale(1.15, .85); }
+  50% { transform: translateY(-60px) scale(.95, 1.1); }
+  80% { transform: translateY(0) scale(1.1, .9); }
+}
+.obj-bounce { display: inline-block; font-size: 56px; animation: bounce 1.2s ease-in-out infinite; }
+
+/* 旋轉 + 變色：每 33% 換一個顏色 */
+@keyframes spin-color {
+  0%   { transform: rotate(0);      background: #3b2a1e; }
+  33%  { transform: rotate(120deg); background: #d9541e; }
+  66%  { transform: rotate(240deg); background: #f4a259; }
+  100% { transform: rotate(360deg); background: #3b2a1e; }
+}
+.obj-pearl { width: 50px; height: 50px; border-radius: 50%; animation: spin-color 3s linear infinite; }
+
+/* 左右走動：49%→50% 瞬間轉身 */
+@keyframes walk {
+  0%   { transform: translateX(0) scaleX(1); }
+  49%  { transform: translateX(220px) scaleX(1); }
+  50%  { transform: translateX(220px) scaleX(-1); }
+  99%  { transform: translateX(0) scaleX(-1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+.obj-walk { display: inline-block; font-size: 48px; animation: walk 4s linear infinite; }
+
+/* 心跳 */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.15); }
+}
+.obj-pulse { display: inline-block; font-size: 48px; animation: pulse 1.4s ease-in-out infinite; }
+
+/* 蒸氣上升 */
+@keyframes steam {
+  0%   { opacity: 0; transform: translateY(20px) scaleX(1); }
+  30%  { opacity: .8; }
+  60%  { transform: translateY(-10px) scaleX(1.4); }
+  100% { opacity: 0; transform: translateY(-40px) scaleX(.8); }
+}
+.steam span { display: inline-block; font-size: 32px; animation: steam 2.4s ease-out infinite; }
+.steam span:nth-child(2) { animation-delay: .5s; }
+.steam span:nth-child(3) { animation-delay: 1s; }
+
+/* =====================================================
+   加分：自訂翻轉效果（美食翻牌）
+   ===================================================== */
+.flip { width: 200px; height: 260px; perspective: 800px; display: inline-block; margin: 8px; }
+.flip-inner { position: relative; width: 100%; height: 100%; transition: transform .7s; transform-style: preserve-3d; }
+.flip:hover .flip-inner, .flip:focus .flip-inner, .flip:focus-within .flip-inner { transform: rotateY(180deg); }
+.flip-face {
+  position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 12px; text-align: center;
+}
+.flip-front { background: #d9541e; color: #fff; font-size: 64px; }
+.flip-front small { font-size: 1.1rem; margin-top: 8px; }
+.flip-back { background: #fff; border: 3px solid #f4a259; transform: rotateY(180deg); }
+.flip:hover .flip-front span { animation: wiggle .5s; }
 </style>
 </head>
 
@@ -125,7 +238,7 @@ footer { text-align: center; padding: 15px; }
     <li><a href="#gallery">圖片介紹</a></li>
     <li><a href="#table">美食整理表</a></li>
     <li><a href="#video">美食影片</a></li>
-    <li><a href="#fx">動態效果</a></li>
+    <li><a href="#fx">動畫</a></li>
     <li><a href="#flipzone">美食翻牌</a></li>
     <li><a href="#quiz">美食測驗</a></li>
     <li><a href="#check">美食判斷</a></li>
@@ -140,7 +253,8 @@ footer { text-align: center; padding: 15px; }
     <p>台灣的小吃種類多、價格親民，夜市更是美食的聚集地。
        想規劃旅遊，可以參考
        <a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a>。</p>
-    <a href="#gallery" class="btn-fx btn-slide" style="text-decoration:none;display:inline-block">開始認識美食</a>
+    <!-- 大尺寸按鈕 btn-lg -->
+    <a href="#gallery" class="btn btn-primary btn-lg">開始認識美食</a>
   </section>
 
   <section id="gallery">
@@ -216,20 +330,9 @@ footer { text-align: center; padding: 15px; }
     </div>
   </section>
 
-  <!-- ===== 作業 1：hover 按鈕 + 作業 2：@keyframes 動畫 ===== -->
+  <!-- ===== 作業 2：@keyframes 動畫 ===== -->
   <section id="fx">
-    <h2>動態效果</h2>
-
-    <h3 class="h5">1. hover 動態按鈕（滑鼠移上去試試）</h3>
-    <div class="btn-row">
-      <button type="button" class="btn-fx btn-lift">上浮</button>
-      <button type="button" class="btn-fx btn-slide">滑入填色</button>
-      <button type="button" class="btn-fx btn-spin">放大旋轉</button>
-      <button type="button" class="btn-fx btn-shine">光澤掃過</button>
-      <button type="button" class="btn-fx btn-ripple">外框擴散</button>
-    </div>
-
-    <h3 class="h5">2. @keyframes 動畫</h3>
+    <h2>動畫</h2>
     <div class="stage">
       <span class="obj-bounce">🍜</span>
       <span class="obj-pulse">🧋</span>
@@ -241,7 +344,7 @@ footer { text-align: center; padding: 15px; }
 
   <!-- ===== 加分：翻轉效果 ===== -->
   <section id="flipzone">
-    <h2>美食翻牌（加分：翻轉效果）</h2>
+    <h2>美食翻牌</h2>
     <p>滑鼠移上去（手機請點一下）看背面介紹。</p>
 
     <div class="flip" tabindex="0"><div class="flip-inner">
@@ -309,6 +412,7 @@ footer { text-align: center; padding: 15px; }
       <p class="feedback"></p>
     </div>
 
+    <!-- 顏色不同：success；禁用狀態：還沒作答時「重新測驗」不能按 -->
     <button type="button" id="showScore" class="btn btn-success">顯示成績</button>
     <button type="button" id="resetQuiz" class="btn btn-outline-secondary" disabled>重新測驗</button>
     <p id="result"></p>
@@ -318,15 +422,17 @@ footer { text-align: center; padding: 15px; }
     <h2>這是台灣美食嗎？</h2>
     <input id="foodName" type="text" placeholder="輸入美食名稱，例如：珍奶">
     <button type="button" id="checkBtn" class="btn btn-primary">判斷</button>
+    <!-- 禁用狀態：輸入框是空的時候不能按 -->
     <button type="button" id="addBtn" class="btn btn-outline-primary" disabled>加入清單</button>
     <button type="button" id="clearInput" class="btn btn-outline-danger btn-sm">清除輸入</button>
     <p id="checkResult"></p>
     <p class="hint">目前清單：<span id="foodList"></span></p>
+    <!-- 顏色不同：danger + 小尺寸 -->
     <button type="button" id="resetFoods" class="btn btn-danger btn-sm">清空自己加入的美食</button>
   </section>
 
   <div class="text-center mb-4">
-    <a href="#top" class="btn-fx btn-lift" style="text-decoration:none;display:inline-block">返回首頁</a>
+    <a href="#top" class="btn btn-outline-primary">返回首頁</a>
   </div>
 
 </main>
