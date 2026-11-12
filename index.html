@@ -7,8 +7,10 @@
 <link rel="icon" type="image/png" href="favicon.png">
 
 <!-- Bootstrap CSS CDN：放在自己的 <style> 前面，自訂樣式才能覆蓋 -->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<!-- 作業：1.按鈕物件  2.keyframe 效果 -->
+<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/keyframes.css">
 
 <style>
 html { scroll-behavior: smooth; }
@@ -28,20 +30,8 @@ header {
   padding: 30px;
 }
 
-nav {
-  background-color: #3b2a1e;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+nav { background-color: #3b2a1e; position: sticky; top: 0; z-index: 10; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; }
 nav li a {
   display: block;
   padding: 12px 22px;
@@ -51,18 +41,13 @@ nav li a {
   border-bottom: 4px solid transparent;
   transition: background-color .2s, border-color .2s;
 }
-nav li a:hover,
-nav li a:focus-visible {
+nav li a:hover, nav li a:focus-visible {
   background-color: #d9541e;
   border-bottom-color: #f4a259;
   color: white;
 }
 
-main {
-  width: 800px;
-  max-width: 95%;
-  margin: 20px auto;
-}
+main { width: 800px; max-width: 95%; margin: 20px auto; }
 
 section {
   background-color: white;
@@ -72,72 +57,27 @@ section {
   scroll-margin-top: 60px;
 }
 
-h2 {
-  color: #d9541e;
-  border-bottom: 3px solid #f4a259;
-}
+h2 { color: #d9541e; border-bottom: 3px solid #f4a259; }
 
 a { color: #d9541e; }
 a:hover { color: #f4a259; }
 
-.food {
-  display: inline-block;
-  margin: 8px;
-  text-align: center;
-}
-.food img {
-  border: 3px solid #f1d9c0;
-  border-radius: 8px;
-  object-fit: cover;
-  display: block;
-}
+.food { display: inline-block; margin: 8px; text-align: center; }
+.food img { border: 3px solid #f1d9c0; border-radius: 8px; object-fit: cover; display: block; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  border: 1px solid #f1d9c0;
-  padding: 8px;
-}
-th {
-  background-color: #d9541e;
-  color: white;
-}
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #f1d9c0; padding: 8px; }
+th { background-color: #d9541e; color: white; }
 
-.video-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-}
-.video-wrap iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  border-radius: 8px;
-}
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
 
-.question {
-  border: 2px solid #f1d9c0;
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 14px;
-}
+.question { border: 2px solid #f1d9c0; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
 .question h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .options button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  margin: 6px 0;
-  padding: 8px 12px;
-  font: inherit;
-  color: inherit;
-  background: #fff7ee;
-  border: 2px solid #f1d9c0;
-  border-radius: 6px;
-  cursor: pointer;
+  display: block; width: 100%; text-align: left; margin: 6px 0; padding: 8px 12px;
+  font: inherit; color: inherit; background: #fff7ee; border: 2px solid #f1d9c0;
+  border-radius: 6px; cursor: pointer;
 }
 .options button:hover:not(:disabled) { border-color: #f4a259; }
 .options button.correct { background: #d8f3dc; border-color: #2d9a4b; }
@@ -145,49 +85,30 @@ th {
 .options button:disabled { cursor: default; }
 .feedback { min-height: 1.8em; font-weight: bold; margin: 4px 0 0; }
 
-#result,
-#checkResult {
-  margin-top: 12px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #d9541e;
-}
+#result, #checkResult { margin-top: 12px; font-size: 1.2rem; font-weight: bold; color: #d9541e; }
 
-#foodName {
-  font: inherit;
-  padding: 8px 10px;
-  margin: 4px 4px 4px 0;
-  border: 2px solid #f1d9c0;
-  border-radius: 6px;
-}
+#foodName { font: inherit; padding: 8px 10px; margin: 4px 4px 4px 0; border: 2px solid #f1d9c0; border-radius: 6px; }
 .hint { font-size: .9rem; color: #7a6552; }
 
 /* Bootstrap 的主要按鈕換成橘色主題 */
 .btn-primary {
-  --bs-btn-bg: #d9541e;
-  --bs-btn-border-color: #d9541e;
-  --bs-btn-hover-bg: #b8441a;
-  --bs-btn-hover-border-color: #b8441a;
-  --bs-btn-active-bg: #a33c17;
-  --bs-btn-active-border-color: #a33c17;
-  --bs-btn-disabled-bg: #d9541e;
-  --bs-btn-disabled-border-color: #d9541e;
+  --bs-btn-bg: #d9541e; --bs-btn-border-color: #d9541e;
+  --bs-btn-hover-bg: #b8441a; --bs-btn-hover-border-color: #b8441a;
+  --bs-btn-active-bg: #a33c17; --bs-btn-active-border-color: #a33c17;
+  --bs-btn-disabled-bg: #d9541e; --bs-btn-disabled-border-color: #d9541e;
 }
 .btn-outline-primary {
-  --bs-btn-color: #d9541e;
-  --bs-btn-border-color: #d9541e;
-  --bs-btn-hover-bg: #d9541e;
-  --bs-btn-hover-border-color: #d9541e;
-  --bs-btn-active-bg: #d9541e;
-  --bs-btn-active-border-color: #d9541e;
-  --bs-btn-disabled-color: #d9541e;
-  --bs-btn-disabled-border-color: #d9541e;
+  --bs-btn-color: #d9541e; --bs-btn-border-color: #d9541e;
+  --bs-btn-hover-bg: #d9541e; --bs-btn-hover-border-color: #d9541e;
+  --bs-btn-active-bg: #d9541e; --bs-btn-active-border-color: #d9541e;
+  --bs-btn-disabled-color: #d9541e; --bs-btn-disabled-border-color: #d9541e;
 }
 
-footer {
-  text-align: center;
-  padding: 15px;
-}
+/* 動態效果區塊 */
+.stage { overflow: hidden; min-height: 90px; margin: 12px 0; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+
+footer { text-align: center; padding: 15px; }
 </style>
 </head>
 
@@ -204,6 +125,8 @@ footer {
     <li><a href="#gallery">圖片介紹</a></li>
     <li><a href="#table">美食整理表</a></li>
     <li><a href="#video">美食影片</a></li>
+    <li><a href="#fx">動態效果</a></li>
+    <li><a href="#flipzone">美食翻牌</a></li>
     <li><a href="#quiz">美食測驗</a></li>
     <li><a href="#check">美食判斷</a></li>
     <li><a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a></li>
@@ -217,8 +140,7 @@ footer {
     <p>台灣的小吃種類多、價格親民，夜市更是美食的聚集地。
        想規劃旅遊，可以參考
        <a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a>。</p>
-    <!-- 大尺寸按鈕 btn-lg -->
-    <a href="#gallery" class="btn btn-primary btn-lg">開始認識美食</a>
+    <a href="#gallery" class="btn-fx btn-slide" style="text-decoration:none;display:inline-block">開始認識美食</a>
   </section>
 
   <section id="gallery">
@@ -227,84 +149,58 @@ footer {
     <div class="food">
       <img src="./images/beef.jpg" width="300" height="200" alt="牛肉麵" usemap="#map-beef">
       <map name="map-beef">
-        <area shape="rect" coords="0,0,300,200"
-              href="https://icook.tw/recipes/425657" target="_blank"
-              alt="紅燒牛肉麵食譜" title="牛肉麵：愛料理食譜">
+        <area shape="rect" coords="0,0,300,200" href="https://icook.tw/recipes/425657" target="_blank" alt="紅燒牛肉麵食譜" title="牛肉麵：愛料理食譜">
       </map>
       <p class="mb-1">牛肉麵</p>
-      <!-- 小尺寸 + Outline 按鈕 -->
-      <a href="https://icook.tw/recipes/425657" target="_blank" rel="noopener"
-         class="btn btn-outline-primary btn-sm">查看食譜</a>
+      <a href="https://icook.tw/recipes/425657" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
 
     <div class="food">
       <img src="./images/tea.jpg" width="300" height="200" alt="珍珠奶茶" usemap="#map-tea">
       <map name="map-tea">
-        <area shape="rect" coords="0,0,300,200"
-              href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank"
-              alt="珍珠奶茶冷知識" title="珍珠奶茶：來好 LAI HAO 冷知識">
+        <area shape="rect" coords="0,0,300,200" href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank" alt="珍珠奶茶冷知識" title="珍珠奶茶：來好 LAI HAO 冷知識">
       </map>
       <p class="mb-1">珍珠奶茶</p>
-      <a href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank" rel="noopener"
-         class="btn btn-outline-primary btn-sm">看冷知識</a>
+      <a href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">看冷知識</a>
     </div>
 
     <div class="food">
       <img src="./images/oyster.jpg" width="300" height="200" alt="蚵仔煎" usemap="#map-oyster">
       <map name="map-oyster">
-        <area shape="rect" coords="0,0,300,200"
-              href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank"
-              alt="蚵仔煎食譜" title="蚵仔煎：楊桃美食網食譜">
+        <area shape="rect" coords="0,0,300,200" href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank" alt="蚵仔煎食譜" title="蚵仔煎：楊桃美食網食譜">
       </map>
       <p class="mb-1">蚵仔煎</p>
-      <a href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank" rel="noopener"
-         class="btn btn-outline-primary btn-sm">查看食譜</a>
+      <a href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
 
     <div class="food">
       <img src="./images/xlb.jpg" width="300" height="200" alt="小籠包" usemap="#map-xlb">
       <map name="map-xlb">
-        <area shape="rect" coords="0,0,300,200"
-              href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank"
-              alt="古早味小籠包食譜" title="小籠包：Cookidoo 食譜">
+        <area shape="rect" coords="0,0,300,200" href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank" alt="古早味小籠包食譜" title="小籠包：Cookidoo 食譜">
       </map>
       <p class="mb-1">小籠包</p>
-      <a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank" rel="noopener"
-         class="btn btn-outline-primary btn-sm">查看食譜</a>
+      <a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">查看食譜</a>
     </div>
   </section>
 
   <section id="table">
     <h2>美食整理表</h2>
     <table>
+      <tr><th>美食</th><th>類型</th><th>特色</th><th>延伸閱讀</th></tr>
       <tr>
-        <th>美食</th>
-        <th>類型</th>
-        <th>特色</th>
-        <th>延伸閱讀</th>
-      </tr>
-      <tr>
-        <td>牛肉麵</td>
-        <td>麵食</td>
-        <td>湯頭濃郁，牛肉軟嫩</td>
+        <td>牛肉麵</td><td>麵食</td><td>湯頭濃郁，牛肉軟嫩</td>
         <td><a href="https://icook.tw/recipes/425657" target="_blank">愛料理：紅燒牛肉麵</a></td>
       </tr>
       <tr>
-        <td>珍珠奶茶</td>
-        <td>飲品</td>
-        <td>奶茶加入Q彈粉圓</td>
+        <td>珍珠奶茶</td><td>飲品</td><td>奶茶加入Q彈粉圓</td>
         <td><a href="https://www.laihao.com.tw/blog/posts/4-fascinating-facts-about-bubble-tea" target="_blank">來好：珍珠奶茶冷知識</a></td>
       </tr>
       <tr>
-        <td>蚵仔煎</td>
-        <td>小吃</td>
-        <td>蚵仔、蛋、粉漿煎成，淋甜辣醬</td>
+        <td>蚵仔煎</td><td>小吃</td><td>蚵仔、蛋、粉漿煎成，淋甜辣醬</td>
         <td><a href="https://www.ytower.com.tw/recipe/iframe-recipe.asp?seq=B02-0320" target="_blank">楊桃美食網：蚵仔煎</a></td>
       </tr>
       <tr>
-        <td>小籠包</td>
-        <td>點心</td>
-        <td>薄皮包肉餡與湯汁</td>
+        <td>小籠包</td><td>點心</td><td>薄皮包肉餡與湯汁</td>
         <td><a href="https://cookidoo.tw/recipes/recipe/zh-Hant/r553241" target="_blank">Cookidoo：古早味小籠包</a></td>
       </tr>
     </table>
@@ -318,6 +214,55 @@ footer {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
+  </section>
+
+  <!-- ===== 作業 1：hover 按鈕 + 作業 2：@keyframes 動畫 ===== -->
+  <section id="fx">
+    <h2>動態效果</h2>
+
+    <h3 class="h5">1. hover 動態按鈕（滑鼠移上去試試）</h3>
+    <div class="btn-row">
+      <button type="button" class="btn-fx btn-lift">上浮</button>
+      <button type="button" class="btn-fx btn-slide">滑入填色</button>
+      <button type="button" class="btn-fx btn-spin">放大旋轉</button>
+      <button type="button" class="btn-fx btn-shine">光澤掃過</button>
+      <button type="button" class="btn-fx btn-ripple">外框擴散</button>
+    </div>
+
+    <h3 class="h5">2. @keyframes 動畫</h3>
+    <div class="stage">
+      <span class="obj-bounce">🍜</span>
+      <span class="obj-pulse">🧋</span>
+      <div class="obj-pearl" style="display:inline-block"></div>
+    </div>
+    <div class="stage"><span class="obj-walk">🥟</span></div>
+    <div class="stage steam"><span>♨</span><span>♨</span><span>♨</span> 小籠包熱騰騰</div>
+  </section>
+
+  <!-- ===== 加分：翻轉效果 ===== -->
+  <section id="flipzone">
+    <h2>美食翻牌（加分：翻轉效果）</h2>
+    <p>滑鼠移上去（手機請點一下）看背面介紹。</p>
+
+    <div class="flip" tabindex="0"><div class="flip-inner">
+      <div class="flip-face flip-front"><span>🍜</span><small>牛肉麵</small></div>
+      <div class="flip-face flip-back"><b>牛肉麵</b><p>湯頭濃郁，牛肉軟嫩</p></div>
+    </div></div>
+
+    <div class="flip" tabindex="0"><div class="flip-inner">
+      <div class="flip-face flip-front"><span>🧋</span><small>珍珠奶茶</small></div>
+      <div class="flip-face flip-back"><b>珍珠奶茶</b><p>奶茶加入Q彈粉圓</p></div>
+    </div></div>
+
+    <div class="flip" tabindex="0"><div class="flip-inner">
+      <div class="flip-face flip-front"><span>🦪</span><small>蚵仔煎</small></div>
+      <div class="flip-face flip-back"><b>蚵仔煎</b><p>蚵仔、蛋、粉漿煎成，淋甜辣醬</p></div>
+    </div></div>
+
+    <div class="flip" tabindex="0"><div class="flip-inner">
+      <div class="flip-face flip-front"><span>🥟</span><small>小籠包</small></div>
+      <div class="flip-face flip-back"><b>小籠包</b><p>薄皮包肉餡與湯汁</p></div>
+    </div></div>
   </section>
 
   <section id="quiz">
@@ -364,7 +309,6 @@ footer {
       <p class="feedback"></p>
     </div>
 
-    <!-- 顏色不同：success；禁用狀態：還沒作答時「重新測驗」不能按 -->
     <button type="button" id="showScore" class="btn btn-success">顯示成績</button>
     <button type="button" id="resetQuiz" class="btn btn-outline-secondary" disabled>重新測驗</button>
     <p id="result"></p>
@@ -374,17 +318,15 @@ footer {
     <h2>這是台灣美食嗎？</h2>
     <input id="foodName" type="text" placeholder="輸入美食名稱，例如：珍奶">
     <button type="button" id="checkBtn" class="btn btn-primary">判斷</button>
-    <!-- 禁用狀態：輸入框是空的時候不能按 -->
     <button type="button" id="addBtn" class="btn btn-outline-primary" disabled>加入清單</button>
     <button type="button" id="clearInput" class="btn btn-outline-danger btn-sm">清除輸入</button>
     <p id="checkResult"></p>
     <p class="hint">目前清單：<span id="foodList"></span></p>
-    <!-- 顏色不同：danger + 小尺寸 -->
     <button type="button" id="resetFoods" class="btn btn-danger btn-sm">清空自己加入的美食</button>
   </section>
 
   <div class="text-center mb-4">
-    <a href="#top" class="btn btn-outline-primary">返回首頁</a>
+    <a href="#top" class="btn-fx btn-lift" style="text-decoration:none;display:inline-block">返回首頁</a>
   </div>
 
 </main>
@@ -420,7 +362,7 @@ footer {
 
         buttons.forEach(function (b) { b.disabled = true; });
         answered++;
-        resetQuizBtn.disabled = false;   // 作答後才能重新測驗
+        resetQuizBtn.disabled = false;
       });
     });
   });
@@ -469,7 +411,6 @@ footer {
 
   var STORAGE_KEY = "myTaiwanFoods";
 
-  // 讀取之前自己加入的美食（瀏覽器關掉再開還在）
   try {
     var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     saved.forEach(function (f) {
@@ -485,9 +426,7 @@ footer {
   function isTaiwanFood(name) {
     var food = normalize(name);
     if (food === "") return "請輸入美食名稱";
-    return taiwanFoods.indexOf(food) !== -1
-      ? "✔ 是台灣美食"
-      : "✘ 不在台灣美食清單中";
+    return taiwanFoods.indexOf(food) !== -1 ? "✔ 是台灣美食" : "✘ 不在台灣美食清單中";
   }
 
   function addFood(name) {
@@ -511,11 +450,8 @@ footer {
   var checkResult = document.getElementById("checkResult");
   var foodList = document.getElementById("foodList");
 
-  function showList() {
-    foodList.textContent = taiwanFoods.join("、");
-  }
+  function showList() { foodList.textContent = taiwanFoods.join("、"); }
 
-  // 輸入框有字，「加入清單」才能按
   foodInput.addEventListener("input", function () {
     addBtn.disabled = foodInput.value.trim() === "";
   });
@@ -547,15 +483,13 @@ footer {
   });
 
   foodInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") checkBtn.click();   // Enter = 判斷
+    if (e.key === "Enter") checkBtn.click();
   });
 
   showList();
 </script>
 
-<!-- Bootstrap JS -->
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
