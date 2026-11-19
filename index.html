@@ -78,6 +78,16 @@ th { background-color: #d9541e; color: white; }
   --bs-btn-disabled-color: #d9541e; --bs-btn-disabled-border-color: #d9541e;
 }
 
+/* ===== 夜市美食好吃指數（JavaScript 判斷小程式） ===== */
+#rank table { margin: 12px 0; }
+#rank td input { width: 80px; padding: 4px 6px; border: 2px solid #f1d9c0; border-radius: 6px; font: inherit; }
+#rankSummary { background: #fff7ee; border: 2px solid #f4a259; border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+#rankSummary p { margin: 4px 0; }
+.lv-must   { color: #d9541e; font-weight: bold; }
+.lv-good   { color: #2d9a4b; font-weight: bold; }
+.lv-normal { color: #7a6552; }
+.lv-low    { color: #d33a2c; }
+
 footer { text-align: center; padding: 15px; }
 
 /* =====================================================
@@ -242,6 +252,7 @@ footer { text-align: center; padding: 15px; }
     <li><a href="#flipzone">美食翻牌</a></li>
     <li><a href="#quiz">美食測驗</a></li>
     <li><a href="#check">美食判斷</a></li>
+    <li><a href="#rank">美食指數</a></li>
     <li><a href="https://www.taiwan.net.tw/" target="_blank">台灣觀光資訊網</a></li>
   </ul>
 </nav>
@@ -431,6 +442,26 @@ footer { text-align: center; padding: 15px; }
     <button type="button" id="resetFoods" class="btn btn-danger btn-sm">清空自己加入的美食</button>
   </section>
 
+  <!-- ===== 今日作業：JavaScript 判斷小程式（陣列 + Math + 多層 if...else） ===== -->
+  <section id="rank">
+    <h2>夜市美食好吃指數</h2>
+    <p>請替每樣美食打分數（0～100），按下按鈕後會找出最高分、最低分、平均分，並判斷等級。</p>
+
+    <table>
+      <tr><th>美食</th><th>分數</th><th>等級</th></tr>
+      <tr><td>牛肉麵</td>   <td><input type="number" class="score" min="0" max="100" value="92"></td><td class="level"></td></tr>
+      <tr><td>珍珠奶茶</td> <td><input type="number" class="score" min="0" max="100" value="88"></td><td class="level"></td></tr>
+      <tr><td>蚵仔煎</td>   <td><input type="number" class="score" min="0" max="100" value="75"></td><td class="level"></td></tr>
+      <tr><td>小籠包</td>   <td><input type="number" class="score" min="0" max="100" value="95"></td><td class="level"></td></tr>
+      <tr><td>臭豆腐</td>   <td><input type="number" class="score" min="0" max="100" value="58"></td><td class="level"></td></tr>
+    </table>
+
+    <button type="button" id="rankBtn" class="btn btn-primary">開始統計</button>
+    <button type="button" id="rankReset" class="btn btn-outline-primary">回復預設分數</button>
+
+    <div id="rankSummary" hidden></div>
+  </section>
+
   <div class="text-center mb-4">
     <a href="#top" class="btn btn-outline-primary">返回首頁</a>
   </div>
@@ -593,6 +624,103 @@ footer { text-align: center; padding: 15px; }
   });
 
   showList();
+
+  /* =====================================================
+     今日作業：夜市美食好吃指數（陣列 + Math + 多層 if...else）
+     ===================================================== */
+  var foodNames = ["牛肉麵", "珍珠奶茶", "蚵仔煎", "小籠包", "臭豆腐"];   // 陣列：美食名稱
+  var defaultScores = [92, 88, 75, 95, 58];                                 // 陣列：預設分數
+
+  var scoreInputs = document.querySelectorAll("#rank .score");
+  var levelCells  = document.querySelectorAll("#rank .level");
+  var rankSummary = document.getElementById("rankSummary");
+
+  // 依分數回傳等級（多層 if...else）
+  function getLevel(s) {
+    if (s >= 60) {
+      if (s >= 80) {
+        if (s >= 90) {
+          return { text: "必吃推薦", cls: "lv-must" };
+        } else {
+          return { text: "值得一試", cls: "lv-good" };
+        }
+      } else {
+        return { text: "普通", cls: "lv-normal" };
+      }
+    } else {
+      return { text: "再考慮", cls: "lv-low" };
+    }
+  }
+
+  document.getElementById("rankBtn").addEventListener("click", function () {
+    var scores = [];            // 陣列：使用者輸入的分數
+    var valid = true;
+
+    for (var i = 0; i < scoreInputs.length; i++) {
+      var v = scoreInputs[i].value;
+      if (v === "" || isNaN(Number(v))) {
+        valid = false;
+      } else if (Number(v) < 0 || Number(v) > 100) {
+        valid = false;
+      } else {
+        scores.push(Number(v));
+      }
+    }
+
+    rankSummary.hidden = false;
+
+    if (!valid) {
+      rankSummary.innerHTML = "<p>⚠ 每一格都要填 0～100 的數字喔！</p>";
+      return;
+    }
+
+    var max = Math.max.apply(null, scores);          // 最高分
+    var min = Math.min.apply(null, scores);          // 最低分
+    var sum = 0;
+    scores.forEach(function (s) { sum += s; });
+    var avg = Math.round(sum / scores.length);       // 四捨五入的平均
+
+    var bestFood  = foodNames[scores.indexOf(max)];
+    var worstFood = foodNames[scores.indexOf(min)];
+
+    // 逐筆填上等級
+    for (var j = 0; j < scores.length; j++) {
+      var lv = getLevel(scores[j]);
+      levelCells[j].textContent = lv.text;
+      levelCells[j].className = "level " + lv.cls;
+    }
+
+    // 整體評語（多層 if...else）
+    var comment;
+    if (avg >= 85) {
+      if (min >= 60) {
+        comment = "整體超強！每一樣都值得吃 😋";
+      } else {
+        comment = "平均很高，但有一樣要小心 🤔";
+      }
+    } else if (avg >= 70) {
+      comment = "表現不錯，可以安心逛夜市 👍";
+    } else if (avg >= 60) {
+      comment = "普通，挑著吃比較好 🙂";
+    } else {
+      comment = "整體偏低，建議換一批美食 😅";
+    }
+
+    rankSummary.innerHTML =
+      "<p>🏆 最高分：<b>" + max + "</b> 分（" + bestFood + "）</p>" +
+      "<p>📉 最低分：<b>" + min + "</b> 分（" + worstFood + "）</p>" +
+      "<p>📊 平均分：<b>" + avg + "</b> 分</p>" +
+      "<p>💬 " + comment + "</p>";
+  });
+
+  document.getElementById("rankReset").addEventListener("click", function () {
+    for (var i = 0; i < scoreInputs.length; i++) {
+      scoreInputs[i].value = defaultScores[i];
+      levelCells[i].textContent = "";
+      levelCells[i].className = "level";
+    }
+    rankSummary.hidden = true;
+  });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
